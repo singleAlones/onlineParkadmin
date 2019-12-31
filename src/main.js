@@ -21,9 +21,11 @@ Vue.component(Menu.name,Menu)
 Vue.component(Pagination.name,Pagination)
 Vue.component(Input.name,Input)
 Vue.component(Button.name,Button)
-
-
- 
+//axios
+import axios from "axios";
+axios.defaults.baseURL = "https://127.0.0.1:443/users/";
+Vue.config.productionTip = false;
+Vue.prototype.axios = axios;
 
   
 new Vue({
