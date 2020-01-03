@@ -6,50 +6,127 @@
             <el-dropdown>
                 <i class="el-icon-setting" style="margin-right: 15px"></i>
                 <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>查看</el-dropdown-item>
+                
                 <el-dropdown-item>新增</el-dropdown-item>
-                <el-dropdown-item>删除</el-dropdown-item>
+                
                 </el-dropdown-menu>
             </el-dropdown>
-            <span>管理员权限</span>
+            <span>用户信息</span>
             </el-header>
             
             <el-main>
-            <el-table :data="tableData">
-                <el-table-column prop="date" label="序号" width="140">
-                </el-table-column>
-                <el-table-column prop="name" label="姓名" width="120">
-                </el-table-column>
-                <el-table-column prop="address" label="电话">
-                </el-table-column>
-            </el-table>
+             <el-table
+    :data="tableData2"
+    style="width: 40%">
+    <el-table-column
+      label="姓名"
+      width="180">
+      <template slot-scope="scope">
+        <span style="margin-left: 10px">{{scope.row.hname }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="电话"
+      width="180">
+      <template slot-scope="scope">          
+          <div slot="reference" class="name-wrapper">
+            <el-tag size="medium">{{ scope.row.hphone }}</el-tag>
+          </div>
+      </template>
+    </el-table-column>
+    <el-table-column label="操作">
+      <template slot-scope="scope">
+        <el-button
+          size="mini"
+          type="danger"
+          @click="handleDelete(scope.row.hphone)">删除</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
             </el-main>
         </el-container>
-            <el-pagination
-            background
-            layout="prev, pager, next"
-            :total="1000">
-            </el-pagination>
+        <div class="pages">
+            第<input type="text"    v-model="pno">页  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            共<input type="text"  v-model="pageSize">条
+             
+            <el-button
+          size="mini"
+          type="success"
+          @click="pnos(pno,pageSize)">查询</el-button>
+        </div>
     </div>
 </template>
 <script>
  
 export default {
     name:'user',
-       data() {
-      const item = {
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      };
+    data() {
       return {
-        tableData: Array(10).fill(item)
-      };
-      
+        pno:1 ,
+        pageSize:4,
+        tableData2:[
+        ]
+      }
     },
-   
+   mounted() {
+        this.loadUser()
+      },
+      methods: {
+        handleDelete:function(hphone){
+             var that=this;
+             console.log(hphone)
+              that.axios.get('deluser',{       // 还可以直接把参数拼接在url后边
+                          params:{
+                            hphone:hphone
+                          }
+                      }).then(function(res){
+                        if(res.data.code=="200"){
+                           that.$message({
+                            type: 'success',
+                            message: res.data.msg,
+                            showClose:  false
+                      })
+                      that.loadUser() 
+                        }
+                      }).catch(function (error) {
+                          console.log(error);
+                      });
+        },
+        loadUser(){
+             var that=this;
+         that.axios.get('seluser',{       // 还可以直接把参数拼接在url后边
+                    params:{
+                      pno:that.pno,
+                      count:that.pageSize
+                    }
+                }).then(function(res){
+                      that.tableData2=[];
+                     for(var i=0;i<res.data.length;i++){
+                          that.tableData2.push(res.data[i])     
+                     }
+                     console.log(that.tableData2)
+                }).catch(function (error) {
+                    console.log(error);
+                });
+        },
+        pnos(pno,pageSize){
+            console.log(pno,pageSize )
+            this.loadUser()
+        }
+      },
 }
 </script>
 <style  scoped>
-   
+     .pages{
+       padding-left: 50px;
+       font-size: 14px;
+     } 
+     .pages input{
+          width: 20px;
+          text-align: center;
+          margin:15px;
+     }
+      .pages .el-button{
+        margin-left: 15px;
+      }
 </style>

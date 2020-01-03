@@ -4,7 +4,7 @@
         <div>世纪华耀管理系统</div>
         <div>
             <div>管理员:</div> 
-            <div>admin</div>
+            <div>{{auser}}</div>
             <div>
              <router-link :to="'login'">退出</router-link>    
             </div>
@@ -14,7 +14,16 @@
 </template>
 <script>
 export default {
-    name:'headers'
+    name:'headers',
+    data() {
+        return {
+            auser:''
+        }
+    },
+    mounted() {
+        var that=this
+        that.auser=that.$store.state.currentUser.auser
+    },
 }
 </script>
 <style styled>

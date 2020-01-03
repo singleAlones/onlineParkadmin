@@ -31,13 +31,13 @@ import headers from  '../views/headers'
    name:'index',
     components:{
          headers,user
-        
       },
       data() {
         return {
           
         }
       },
+  
      
       
      
