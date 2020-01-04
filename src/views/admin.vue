@@ -72,12 +72,12 @@ export default {
         this.loadUser()
       },
       methods: {
-        handleDelete:function(hphone){
+        handleDelete:function(auser){
              var that=this;
-             console.log(hphone)
+             console.log(auser)
               that.axios.get('deladmin',{       // 还可以直接把参数拼接在url后边
                           params:{
-                            hphone:hphone
+                            auser:auser
                           }
                       }).then(function(res){
                         if(res.data.code=="200"){
