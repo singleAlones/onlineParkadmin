@@ -22,7 +22,7 @@
       label="管理员用户名"
       width="180">
       <template slot-scope="scope">
-        <span style="margin-left: 10px">{{scope.row.hname }}</span>
+        <span style="margin-left: 10px">{{scope.row.auser }}</span>
       </template>
     </el-table-column>
     <el-table-column
@@ -30,7 +30,7 @@
       width="180">
       <template slot-scope="scope">          
           <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.hphone }}</el-tag>
+            <el-tag size="medium">{{ scope.row.apwd }}</el-tag>
           </div>
       </template>
     </el-table-column>
@@ -39,7 +39,7 @@
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.row.hphone)">删除</el-button>
+          @click="handleDelete(scope.row.auser)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -75,7 +75,7 @@ export default {
         handleDelete:function(hphone){
              var that=this;
              console.log(hphone)
-              that.axios.get('deluser',{       // 还可以直接把参数拼接在url后边
+              that.axios.get('deladmin',{       // 还可以直接把参数拼接在url后边
                           params:{
                             hphone:hphone
                           }
@@ -94,7 +94,7 @@ export default {
         },
         loadUser(){
              var that=this;
-         that.axios.get('seluser',{       // 还可以直接把参数拼接在url后边
+         that.axios.get('seladmin',{       // 还可以直接把参数拼接在url后边
                     params:{
                       pno:that.pno,
                       count:that.pageSize

@@ -36,7 +36,7 @@ Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$message = Message;
 //axios
 import axios from "axios";
-axios.defaults.baseURL = "https://127.0.0.1:443/users/";
+axios.defaults.baseURL = "https://39.100.91.138:443/users/";
 Vue.config.productionTip = false;
 Vue.prototype.axios = axios;
 
