@@ -53,7 +53,9 @@
           size="mini"
           type="success"
           @click="pnos(pno,pageSize)">查询</el-button>
+          <div>用戶总数  :共 <span>{{total}}</span>条</div>
         </div>
+        
     </div>
 </template>
 <script>
@@ -65,11 +67,13 @@ export default {
         pno:1 ,
         pageSize:4,
         tableData2:[
-        ]
+        ],
+        total:''
       }
     },
    mounted() {
-        this.loadUser()
+        this.loadUser();
+         this.loadTotal();
       },
       methods: {
         handleDelete:function(hphone){
@@ -112,6 +116,13 @@ export default {
         pnos(pno,pageSize){
             console.log(pno,pageSize )
             this.loadUser()
+        },
+         loadTotal(){
+              var that=this;
+              that.axios.get('userAll').then(function(res){
+               
+                 that.total=res.data[0].number;
+              })
         }
       },
 }
